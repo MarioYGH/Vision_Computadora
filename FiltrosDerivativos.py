@@ -31,3 +31,21 @@ if __name__ == '__main__':
     plt.axis('off')
 
     plt.show()
+    
+    # Calculamos la magnitud del gradiente y su orientacion
+    magnitude = np.sqrt((sobelx ** 2) + (sobely ** 2))
+    orientation = np.arctan2(sobelx, sobely) * (180 / np.pi) % 180 
+    
+    plt.subplot(1, 2, 1)
+    plt.imshow(magnitude, cmap='gray')
+    plt.title('magnitude')
+    plt.axis('off')
+
+    plt.subplot(1, 2, 2)
+    plt.imshow(orientation, cmap='gray')
+    plt.title('orientation')
+    plt.axis('off')
+    
+    plt.show()
+    
+    
