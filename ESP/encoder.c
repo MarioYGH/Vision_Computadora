@@ -15,11 +15,13 @@ void app_main(void){
 
     ESP_LOGI(TAG, "init pent driver to encoder");
     ESP_ERROR_CHECK(init_encoder_m1());
+    set_speed_m1 (0);
 
     char sstr[20];
 
     while(true){
-        ESP_LOGI(TAG, "Count: %d", get_count_m1());
+        //ESP_LOGI(TAG, "Count: %d", get_count_m1());
+        ESP_LOGI(TAG, "Speed: %f", get_w_m1());
 
         vTaskDelay(pdMS_TO_TICKS(100));
     }
