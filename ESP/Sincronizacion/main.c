@@ -57,8 +57,8 @@ static void rx_task(void *arg){
                     set_point = strtof((char *)data, NULL);
                     
                     /* Write data back to the UART */
-                    //set_speed_m1(percent2w(set_point));
-                    set_speed_m1(set_point);
+                    set_speed_m1(percent2w(set_point));
+                    //set_speed_m1(set_point);
                     
                     /* Clear the buffer */
                     uart_flush(UART_PORT);
@@ -92,22 +92,22 @@ void app_main(){
 
     xTaskCreate(rx_task, "uart_rx_task", TASK_MEMORY, NULL, configMAX_PRIORITIES-1, NULL);
 
-    //char sstr[20];
+    char sstr[20];
     int speed = 0;
 
     while(true){
-        //uint64_t currentTime = esp_timer_get_time() / 1000; // Convert microseconds to milliseconds
+        uint64_t currentTime = esp_timer_get_time() / 1000; // Convert microseconds to milliseconds
 
-        //if ((currentTime - lastTime) >= sampleTime) {
-            //w = get_w_m1();
+        if ((currentTime - lastTime) >= sampleTime) {
+            w = get_w_m1();
                 
             // Convert float to string using sprintf
-            //sprintf(sstr, "%.4f", w2percent(w));
-            //uart_write_bytes(UART_PORT, (const char *)sstr, strlen(sstr));
-            //uart_write_bytes(UART_PORT, "\n", 1);
+            sprintf(sstr, "%.4f", w2percent(w));
+            uart_write_bytes(UART_PORT, (const char *)sstr, strlen(sstr));
+            uart_write_bytes(UART_PORT, "\n", 1);
 
-            //lastTime = currentTime; /* Update last time */
-        //}
+            lastTime = currentTime; /* Update last time */
+        }
 
         vTaskDelay(pdMS_TO_TICKS(500));
     }
